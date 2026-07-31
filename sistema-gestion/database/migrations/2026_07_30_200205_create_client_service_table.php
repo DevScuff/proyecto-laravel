@@ -9,14 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('client_service', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
-
+   public function up(): void
+{
+    Schema::create('client_service', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('client_id')->constrained()->onDelete('cascade');
+        $table->foreignId('service_id')->constrained()->onDelete('cascade');
+        $table->timestamps();
+    });
+}
     /**
      * Reverse the migrations.
      */

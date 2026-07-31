@@ -20,9 +20,15 @@ class TicketPolicy
      * Determine whether the user can view the model.
      */
     public function view(User $user, Ticket $ticket): bool
-    {
-        return false;
+{
+    // Administradores y Técnicos pueden ver cualquier ticket
+    if ($user->role === 'admin' || $user->role === 'tecnico') {
+        return true;
     }
+
+    // El Cliente SOLO puede verlo si su ID coincide con el del ticket
+    return $user->id === $ticket->client_id;
+}
 
     /**
      * Determine whether the user can create models.
@@ -36,9 +42,13 @@ class TicketPolicy
      * Determine whether the user can update the model.
      */
     public function update(User $user, Ticket $ticket): bool
-    {
-        return false;
+{
+    if ($user->role === 'admin' || $user->role === 'tecnico') {
+        return true;
     }
+
+    return $user->id === $ticket->client_id;
+}
 
     /**
      * Determine whether the user can delete the model.

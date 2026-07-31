@@ -18,15 +18,60 @@
     </nav>
 
     <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h2 class="card-title mb-4">Bienvenido al Sistema</h2>
-                        <p class="text-muted">Módulo de control para Clientes, Facturas y Tickets de Soporte (Arquitectura Laravel).</p>
-                        
-                        <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">Bienvenido al Sistema</h2>
+                    <p class="text-muted">Módulo de control para Clientes, Facturas y Tickets de Soporte (Arquitectura Laravel).</p>
+                    
+                    <hr>
 
+                    <!-- AQUÍ EMPIEZA EL FORMULARIO DE REGISTRO -->
+                    <h4 class="card-title mb-3">Registrar Nuevo Cliente</h4>
+                    
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    <form action="{{ route('clients.store') }}" method="POST">
+                        @csrf 
+                        
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre del Cliente</label>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}">
+                            @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}">
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Teléfono</label>
+                            <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value="{{ old('phone') }}">
+                            @error('phone')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Guardar Cliente</button>
+                    </form>
+                    <!-- AQUÍ TERMINA EL FORMULARIO -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
                         <div class="row mt-4">
                             <div class="col-md-4">
                                 <div class="p-3 border bg-white rounded shadow-sm">

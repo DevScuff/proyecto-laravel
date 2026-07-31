@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
-use App\Events\ClientCreated; // Tu evento
-use App\Http\Requests\StoreClientRequest; // Tu form request de seguridad
+use App\Events\ClientCreated;
+use App\Http\Requests\StoreClientRequest;
 
 class ClientController extends Controller
 {
     public function store(StoreClientRequest $request)
     {
-        // 1. Guardamos al cliente en la base de datos
+        // 1. Guardamos al cliente validado
         $client = Client::create($request->validated());
 
-        // 2. AQUÍ VA EL DISPATCH: Disparamos el evento que encolará el Job
+        // 2. Disparamos el evento para encolar el Job en segundo plano
         ClientCreated::dispatch($client);
 
-        // Retornamos una respuesta de éxito
-        return response()->json(['message' => 'Cliente creado y factura en proceso.'], 201);
+        // 3. Retornamos a la vista con mensaje de éxito
+        return redirect()->back()->with('success', '¡Cliente registrado con éxito! La factura y el correo están en proceso.');
     }
 }

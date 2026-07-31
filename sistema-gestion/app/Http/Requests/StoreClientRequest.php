@@ -22,7 +22,7 @@ class StoreClientRequest extends FormRequest
     return [
         'name' => 'required|string|max:255',
         'email' => 'required|email|unique:clients,email',
-        'phone' => 'nullable|string|max:20',
+        'phone' => 'required|string|max:20',
         ];
     }
 }
